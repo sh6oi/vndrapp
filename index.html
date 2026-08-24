@@ -1075,7 +1075,7 @@
       }
     }
 
-    // تحميل تفاصيل الشحن بتنسيق أنيق
+    // تحميل تفاصيل الشحن مع مدة الشحن
     function loadShipping() {
       shippingContentEl.innerHTML = `
         <div class="info-grid">
@@ -1105,6 +1105,14 @@
             <div>
               <div class="info-label">الشحن</div>
               <div class="info-value">مجاني بدون تحميل</div>
+            </div>
+          </div>
+          <!-- إضافة مدة الشحن هنا -->
+          <div class="shipping-card">
+            <div class="shipping-icon">⏳</div>
+            <div>
+              <div class="info-label">مدة الشحن</div>
+              <div class="info-value">من 14 إلى 18 يوم</div>
             </div>
           </div>
           <div class="shipping-card">
