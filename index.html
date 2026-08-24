@@ -143,11 +143,7 @@
     }
 
     /* التطبيق */
-    #app {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+    #app { display: flex; flex-direction: column; min-height: 100vh; }
     header {
       background: var(--black);
       color: var(--white);
@@ -348,23 +344,158 @@
     .badge-blue { background: #e3f2fd; color: #1565c0; }
     .badge-orange { background: #fff3e0; color: #e65100; }
 
-    /* تفاصيل الطلب */
-    .detail-row {
+    /* تحسينات الملف الشخصي وتفاصيل الشحن */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .info-card {
+      background: var(--gray-bg);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+    }
+    .info-card:hover {
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--yellow);
+    }
+    .info-icon {
+      width: 45px;
+      height: 45px;
+      background: var(--black);
+      color: var(--yellow);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .info-content { flex: 1; }
+    .info-label { font-size: 13px; color: #888; font-weight: 600; }
+    .info-value { font-weight: 700; color: var(--black); font-size: 16px; word-break: break-all; }
+
+    .shipping-card {
+      background: var(--gray-bg);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .shipping-card:hover {
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--yellow);
+    }
+    .shipping-icon {
+      width: 45px;
+      height: 45px;
+      background: var(--black);
+      color: var(--yellow);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    /* تفاصيل الطلب المحسّنة */
+    .order-detail-banner {
+      background: var(--black);
+      color: var(--yellow);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .detail-row .label { color: #666; font-weight: 600; }
-    .detail-row .value { font-weight: 700; color: var(--black); }
-    .products-list { margin-top: 15px; }
+    .order-detail-banner .order-num {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .order-status-large {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .order-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .detail-card {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--border);
+    }
+    .detail-card .d-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--black);
+      color: var(--yellow);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .detail-card .d-label { font-size: 12px; color: #888; font-weight: 600; }
+    .detail-card .d-value { font-weight: 700; color: var(--black); font-size: 15px; }
+
+    .products-title {
+      font-weight: 900;
+      font-size: 18px;
+      margin: 15px 0 10px;
+      color: var(--black);
+    }
     .product-item {
       background: var(--gray-bg);
-      padding: 12px;
+      padding: 12px 15px;
       border-radius: 10px;
       margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      border: 1px solid var(--border);
+    }
+    .product-item a {
+      color: var(--black);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .product-qty-badge {
+      background: var(--yellow);
+      color: var(--black);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
     }
 
     /* حساب السعر */
@@ -463,6 +594,8 @@
       .modal .close-btn { top: 15px; left: 15px; }
       .login-card { padding: 30px 20px; }
       .user-code-badge { display: none; }
+      .info-grid { grid-template-columns: 1fr; }
+      .order-detail-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       header { padding: 10px 15px; }
@@ -471,6 +604,7 @@
       .btn { padding: 12px 20px; font-size: 14px; }
       .stat-card .stat-value { font-size: 28px; }
       .welcome-card .welcome-code { font-size: 16px; padding: 8px 16px; }
+      .order-detail-banner { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -544,14 +678,7 @@
         <!-- تفاصيل الشحن -->
         <section id="shipping-section" class="section hidden">
           <h2 class="section-title">تفاصيل الشحن مع فندر</h2>
-          <div class="detail-row"><span class="label">الدولة</span><span class="value">الإمارات</span></div>
-          <div class="detail-row"><span class="label">العملة</span><span class="value">الدولار</span></div>
-          <div class="detail-row"><span class="label">سعر الصرف</span><span class="value">1,320</span></div>
-          <div class="detail-row"><span class="label">الشحن</span><span class="value">مجاني بدون تحميل</span></div>
-          <div class="detail-row"><span class="label">التوصيل للطلبات فوق 100 ألف دينار</span><span class="value">مجاني</span></div>
-          <div class="detail-row"><span class="label">التوصيل داخل ذي قار</span><span class="value">3,000 دينار</span></div>
-          <div class="detail-row"><span class="label">التوصيل لجميع المحافظات (أقل من 100 ألف)</span><span class="value">5,000 دينار</span></div>
-          <div class="detail-row"><span class="label">الضمان</span><span class="value">ضمان على الشحنة في حال التلف أو الضياع، نتحمل كافة المسؤولية</span></div>
+          <div id="shipping-content"></div>
         </section>
 
         <!-- حساب السعر -->
@@ -623,6 +750,7 @@
     const ordersCountEl = document.getElementById('orders-count');
     const ordersListEl = document.getElementById('orders-list');
     const profileContentEl = document.getElementById('profile-content');
+    const shippingContentEl = document.getElementById('shipping-content');
     const orderDetailsContent = document.getElementById('order-details-content');
     const backToOrders = document.getElementById('back-to-orders');
     const usdInput = document.getElementById('usd-input');
@@ -630,7 +758,7 @@
     const headerUserCode = document.getElementById('header-user-code');
     const welcomeUserCode = document.getElementById('welcome-user-code');
 
-    // تحديث عرض كود المستخدم في الواجهة
+    // تحديث عرض كود المستخدم
     function updateUserCodeDisplay() {
       if (currentUserCode) {
         headerUserCode.textContent = currentUserCode;
@@ -655,6 +783,7 @@
       document.getElementById(sectionId + '-section').classList.remove('hidden');
       if (sectionId === 'dashboard') loadDashboard();
       if (sectionId === 'profile') loadProfile();
+      if (sectionId === 'shipping') loadShipping();
     }
 
     // تسجيل الدخول
@@ -702,27 +831,44 @@
       userCodeInput.value = '';
       headerUserCode.textContent = '';
       welcomeUserCode.textContent = '';
-      // العودة للقسم الرئيسي
       document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
       document.querySelector('.menu-item[data-section="dashboard"]').classList.add('active');
       showSection('dashboard');
     });
 
-    // تحميل لوحة التحكم
+    // تحميل لوحة التحكم مع جلب حالة الشحنات
     async function loadDashboard() {
       if (!currentUserCode) return;
       updateUserCodeDisplay();
       try {
+        // جلب الطلبات
         const ordersRef = ref(db, 'orders');
         const ordersQuery = query(ordersRef, orderByChild('userCode'), equalTo(currentUserCode));
-        const snapshot = await get(ordersQuery);
+        const ordersSnapshot = await get(ordersQuery);
         const orders = [];
-        if (snapshot.exists()) {
-          snapshot.forEach(child => {
+        if (ordersSnapshot.exists()) {
+          ordersSnapshot.forEach(child => {
             orders.push({ id: child.key, ...child.val() });
           });
         }
         orders.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+
+        // جلب جميع الشحنات لمعرفة الحالات
+        const shipmentsRef = ref(db, 'shipments');
+        const shipmentsSnapshot = await get(shipmentsRef);
+        const shipmentStatusMap = {};
+        if (shipmentsSnapshot.exists()) {
+          shipmentsSnapshot.forEach(child => {
+            const data = child.val();
+            shipmentStatusMap[data.shipmentNumber] = data.status || 'قيد التجهيز';
+          });
+        }
+
+        // تحديث حالة كل طلب
+        orders.forEach(order => {
+          order.status = shipmentStatusMap[order.shipmentNumber] || 'قيد التجهيز';
+        });
+
         ordersCountEl.textContent = orders.length;
         renderOrders(orders);
       } catch (error) {
@@ -761,7 +907,7 @@
       return 'badge-yellow';
     }
 
-    // عرض تفاصيل الطلب
+    // عرض تفاصيل الطلب بتنسيق جذاب
     async function viewOrderDetails(orderId) {
       try {
         const orderRef = ref(db, 'orders/' + orderId);
@@ -785,21 +931,71 @@
         const products = (order.repeatedProducts || []).map(p => `
           <div class="product-item">
             <span>${p.url ? `<a href="${p.url}" target="_blank">رابط المنتج</a>` : 'لا يوجد رابط'}</span>
-            <span>العدد: ${p.quantity || 1}</span>
+            <span class="product-qty-badge">العدد: ${p.quantity || 1}</span>
           </div>
         `).join('');
 
+        // تحويل الحالة إلى كلاس CSS
+        const statusClass = getStatusBadge(status);
+
         orderDetailsContent.innerHTML = `
-          <div class="detail-row"><span class="label">رقم الطلب</span><span class="value">${order.orderNumber || 'غير محدد'}</span></div>
-          <div class="detail-row"><span class="label">رقم الشحنة</span><span class="value">${order.shipmentNumber || 'غير محدد'}</span></div>
-          <div class="detail-row"><span class="label">حالة الطلب</span><span class="value">${status}</span></div>
-          <div class="detail-row"><span class="label">رابط السلة</span><span class="value"><a href="${order.cartLink || '#'}" target="_blank">فتح الرابط</a></span></div>
-          <div class="detail-row"><span class="label">السعر بالدولار</span><span class="value">$${order.priceUSD || 0}</span></div>
-          <div class="detail-row"><span class="label">السعر الأصلي بالدينار</span><span class="value">${formatNumber(order.originalPriceIQD || 0)} د.ع</span></div>
-          <div class="detail-row"><span class="label">العربون</span><span class="value">${formatNumber(order.deposit || 0)} د.ع</span></div>
-          <div class="detail-row"><span class="label">سعر التوصيل</span><span class="value">${formatNumber(order.deliveryFee || 0)} د.ع</span></div>
-          <div class="detail-row"><span class="label">السعر النهائي</span><span class="value">${formatNumber(order.finalPriceIQD || 0)} د.ع</span></div>
-          <div class="products-list"><strong>المنتجات المكررة:</strong>${products || '<p>لا يوجد</p>'}</div>
+          <div class="order-detail-banner">
+            <div class="order-num">📦 طلب رقم: ${order.orderNumber || 'غير محدد'}</div>
+            <span class="order-status-large badge ${statusClass}">${status}</span>
+          </div>
+          <div class="order-detail-grid">
+            <div class="detail-card">
+              <div class="d-icon">🚢</div>
+              <div>
+                <div class="d-label">رقم الشحنة</div>
+                <div class="d-value">${order.shipmentNumber || 'غير محدد'}</div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <div class="d-icon">🔗</div>
+              <div>
+                <div class="d-label">رابط السلة</div>
+                <div class="d-value"><a href="${order.cartLink || '#'}" target="_blank" style="color:var(--black); font-weight:700;">فتح الرابط</a></div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <div class="d-icon">💵</div>
+              <div>
+                <div class="d-label">السعر بالدولار</div>
+                <div class="d-value">$${order.priceUSD || 0}</div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <div class="d-icon">💰</div>
+              <div>
+                <div class="d-label">السعر الأصلي بالدينار</div>
+                <div class="d-value">${formatNumber(order.originalPriceIQD || 0)} د.ع</div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <div class="d-icon">🧾</div>
+              <div>
+                <div class="d-label">العربون</div>
+                <div class="d-value">${formatNumber(order.deposit || 0)} د.ع</div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <div class="d-icon">🚚</div>
+              <div>
+                <div class="d-label">سعر التوصيل</div>
+                <div class="d-value">${formatNumber(order.deliveryFee || 0)} د.ع</div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <div class="d-icon">✅</div>
+              <div>
+                <div class="d-label">السعر النهائي</div>
+                <div class="d-value">${formatNumber(order.finalPriceIQD || 0)} د.ع</div>
+              </div>
+            </div>
+          </div>
+          <div class="products-title">📋 المنتجات المكررة</div>
+          ${products || '<p style="color:#888;">لا يوجد منتجات مكررة</p>'}
         `;
         showSection('order-details');
       } catch (error) {
@@ -809,7 +1005,7 @@
 
     backToOrders.addEventListener('click', () => showSection('dashboard'));
 
-    // تحميل الملف الشخصي
+    // تحميل الملف الشخصي بتنسيق أنيق
     async function loadProfile() {
       if (!currentUserCode) return;
       try {
@@ -822,17 +1018,125 @@
           user = child.val();
         });
         profileContentEl.innerHTML = `
-          <div class="detail-row"><span class="label">الكود</span><span class="value">${user.code}</span></div>
-          <div class="detail-row"><span class="label">حساب الإنستغرام</span><span class="value"><a href="${user.instagram || '#'}" target="_blank">${user.instagram || 'غير محدد'}</a></span></div>
-          <div class="detail-row"><span class="label">رقم الهاتف الأول</span><span class="value">${user.phone1 || 'غير محدد'}</span></div>
-          <div class="detail-row"><span class="label">رقم الهاتف الثاني</span><span class="value">${user.phone2 || 'غير محدد'}</span></div>
-          <div class="detail-row"><span class="label">المحافظة</span><span class="value">${user.province || 'غير محدد'}</span></div>
-          <div class="detail-row"><span class="label">العنوان</span><span class="value">${user.address || 'غير محدد'}</span></div>
-          <div class="detail-row"><span class="label">الحالة</span><span class="value">${user.blocked ? 'محظور' : 'نشط'}</span></div>
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-icon">🔑</div>
+              <div class="info-content">
+                <div class="info-label">كود المستخدم</div>
+                <div class="info-value">${user.code}</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">📸</div>
+              <div class="info-content">
+                <div class="info-label">حساب الإنستغرام</div>
+                <div class="info-value"><a href="${user.instagram || '#'}" target="_blank">${user.instagram || 'غير محدد'}</a></div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">📞</div>
+              <div class="info-content">
+                <div class="info-label">رقم الهاتف الأول</div>
+                <div class="info-value">${user.phone1 || 'غير محدد'}</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">📞</div>
+              <div class="info-content">
+                <div class="info-label">رقم الهاتف الثاني</div>
+                <div class="info-value">${user.phone2 || 'غير محدد'}</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">📍</div>
+              <div class="info-content">
+                <div class="info-label">المحافظة</div>
+                <div class="info-value">${user.province || 'غير محدد'}</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">🏠</div>
+              <div class="info-content">
+                <div class="info-label">العنوان</div>
+                <div class="info-value">${user.address || 'غير محدد'}</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">⚙️</div>
+              <div class="info-content">
+                <div class="info-label">الحالة</div>
+                <div class="info-value">${user.blocked ? 'محظور' : 'نشط'}</div>
+              </div>
+            </div>
+          </div>
         `;
       } catch (error) {
         console.error(error);
       }
+    }
+
+    // تحميل تفاصيل الشحن بتنسيق أنيق
+    function loadShipping() {
+      shippingContentEl.innerHTML = `
+        <div class="info-grid">
+          <div class="shipping-card">
+            <div class="shipping-icon">🌍</div>
+            <div>
+              <div class="info-label">الدولة</div>
+              <div class="info-value">الإمارات</div>
+            </div>
+          </div>
+          <div class="shipping-card">
+            <div class="shipping-icon">💵</div>
+            <div>
+              <div class="info-label">العملة</div>
+              <div class="info-value">الدولار</div>
+            </div>
+          </div>
+          <div class="shipping-card">
+            <div class="shipping-icon">📈</div>
+            <div>
+              <div class="info-label">سعر الصرف</div>
+              <div class="info-value">1,320</div>
+            </div>
+          </div>
+          <div class="shipping-card">
+            <div class="shipping-icon">📦</div>
+            <div>
+              <div class="info-label">الشحن</div>
+              <div class="info-value">مجاني بدون تحميل</div>
+            </div>
+          </div>
+          <div class="shipping-card">
+            <div class="shipping-icon">🚚</div>
+            <div>
+              <div class="info-label">التوصيل للطلبات فوق 100 ألف دينار</div>
+              <div class="info-value">مجاني</div>
+            </div>
+          </div>
+          <div class="shipping-card">
+            <div class="shipping-icon">🏙️</div>
+            <div>
+              <div class="info-label">التوصيل داخل ذي قار</div>
+              <div class="info-value">3,000 دينار</div>
+            </div>
+          </div>
+          <div class="shipping-card">
+            <div class="shipping-icon">🇮🇶</div>
+            <div>
+              <div class="info-label">التوصيل لجميع المحافظات (أقل من 100 ألف)</div>
+              <div class="info-value">5,000 دينار</div>
+            </div>
+          </div>
+          <div class="shipping-card">
+            <div class="shipping-icon">🛡️</div>
+            <div>
+              <div class="info-label">الضمان</div>
+              <div class="info-value">ضمان على الشحنة في حال التلف أو الضياع، نتحمل كافة المسؤولية</div>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     // حاسبة السعر
