@@ -1,0 +1,25 @@
+{
+  "name": "فندر - لوحة المستخدم",
+  "short_name": "فندر",
+  "description": "تطبيق فندر لتتبع الطلبات والشحنات",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "https://frightened-purple-f0xka6ph.edgeone.dev/file.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://frightened-purple-f0xka6ph.edgeone.dev/file.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait"
+}
