@@ -16,12 +16,16 @@
   <!-- PWA manifest -->
   <link rel="manifest" href="./manifest.json">
 
+  <!-- Font Awesome للأيقونات الاحترافية -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
 
     :root {
       --yellow: #fbc02d;
       --yellow-hover: #f9a825;
+      --yellow-light: #fff8e1;
       --black: #0a0a0a;
       --dark-gray: #1a1a1a;
       --white: #ffffff;
@@ -34,12 +38,21 @@
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
       --shadow-md: 0 6px 20px rgba(0,0,0,0.12);
       --shadow-lg: 0 12px 40px rgba(0,0,0,0.2);
+      --shadow-xl: 0 20px 60px rgba(0,0,0,0.3);
       --radius: 16px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient-yellow: linear-gradient(135deg, #fbc02d 0%, #f9a825 100%);
+      --gradient-black: linear-gradient(135deg, #0a0a0a 0%, #2a2a2a 100%);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-    body { background: var(--gray-bg); min-height: 100vh; }
+    body { 
+      background: var(--gray-bg); 
+      min-height: 100vh; 
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 100px; /* مساحة للشريط السفلي */
+    }
     .hidden { display: none !important; }
     button { cursor: pointer; border: none; outline: none; background: none; }
     input {
@@ -71,12 +84,35 @@
       white-space: nowrap;
       width: 100%;
     }
-    .btn-yellow { background: var(--yellow); color: var(--black); }
-    .btn-yellow:hover { background: var(--yellow-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(251,192,45,0.4); }
-    .btn-black { background: var(--black); color: var(--yellow); }
-    .btn-black:hover { background: #222; transform: translateY(-2px); }
-    .btn-outline { background: transparent; color: var(--black); border: 2px solid var(--black); }
-    .btn-outline:hover { background: var(--black); color: var(--yellow); }
+    .btn-yellow { 
+      background: var(--gradient-yellow); 
+      color: var(--black); 
+      box-shadow: 0 4px 15px rgba(251,192,45,0.4);
+    }
+    .btn-yellow:hover { 
+      background: var(--yellow-hover); 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 25px rgba(251,192,45,0.5);
+    }
+    .btn-black { 
+      background: var(--gradient-black); 
+      color: var(--yellow); 
+    }
+    .btn-black:hover { 
+      background: #222; 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .btn-outline { 
+      background: transparent; 
+      color: var(--black); 
+      border: 2px solid var(--black); 
+    }
+    .btn-outline:hover { 
+      background: var(--black); 
+      color: var(--yellow); 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
 
     /* شاشة الدخول */
     #login-screen {
@@ -88,26 +124,33 @@
       padding: 20px;
       position: relative;
       overflow: hidden;
+      width: 100%;
     }
     #login-screen::before {
       content: '';
       position: absolute;
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, rgba(251,192,45,0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(251,192,45,0.15) 0%, transparent 70%);
       top: -100px;
       left: -100px;
       border-radius: 50%;
+      animation: pulse 3s ease-in-out infinite;
     }
     #login-screen::after {
       content: '';
       position: absolute;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(251,192,45,0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(251,192,45,0.1) 0%, transparent 70%);
       bottom: -100px;
       right: -100px;
       border-radius: 50%;
+      animation: pulse 3s ease-in-out infinite 1.5s;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
     .login-card {
       background: var(--white);
@@ -115,11 +158,12 @@
       padding: 40px 30px;
       width: 100%;
       max-width: 400px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      box-shadow: var(--shadow-xl);
       text-align: center;
       position: relative;
       z-index: 1;
       animation: slideUp 0.6s ease;
+      border: 2px solid rgba(251,192,45,0.2);
     }
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(40px); }
@@ -128,7 +172,7 @@
     .login-card .logo {
       width: 80px;
       height: 80px;
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       border-radius: 24px;
       display: flex;
@@ -138,9 +182,31 @@
       font-weight: 900;
       margin: 0 auto 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .login-card .logo::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shine 3s infinite;
+    }
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
     }
     .login-card h1 { font-size: 28px; color: var(--black); margin-bottom: 5px; }
-    .login-card .highlight { color: var(--yellow); background: var(--black); display: inline-block; padding: 2px 12px; border-radius: 8px; }
+    .login-card .highlight { 
+      color: var(--yellow); 
+      background: var(--black); 
+      display: inline-block; 
+      padding: 2px 12px; 
+      border-radius: 8px; 
+    }
     .login-card p { color: #777; margin-bottom: 25px; font-size: 15px; }
     .input-group { margin-bottom: 20px; text-align: right; }
     .input-group label { display: block; font-weight: 600; margin-bottom: 6px; }
@@ -152,12 +218,16 @@
       font-weight: 600;
       font-size: 14px;
       padding: 5px;
+      transition: var(--transition);
+    }
+    .create-account-btn:hover {
+      color: var(--yellow-hover);
     }
 
     /* التطبيق */
-    #app { display: flex; flex-direction: column; min-height: 100vh; }
+    #app { display: flex; flex-direction: column; min-height: 100vh; width: 100%; }
     header {
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--white);
       padding: 15px 20px;
       display: flex;
@@ -167,28 +237,35 @@
       top: 0;
       z-index: 1000;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      border-bottom: 3px solid var(--yellow);
     }
-    header .brand { font-size: 24px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+    header .brand { 
+      font-size: 24px; 
+      font-weight: 900; 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+    }
+    header .brand i {
+      color: var(--yellow);
+      font-size: 28px;
+    }
     header .brand span { color: var(--yellow); }
     .user-code-badge {
-      background: var(--yellow);
+      background: var(--gradient-yellow);
       color: var(--black);
       padding: 8px 16px;
       border-radius: 20px;
       font-weight: 700;
       font-size: 14px;
       margin: 0 10px;
-    }
-    .hamburger {
-      background: var(--yellow);
-      color: var(--black);
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(251,192,45,0.4);
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
+    }
+    .user-code-badge i {
+      font-size: 16px;
     }
     .logout-btn {
       background: transparent;
@@ -199,54 +276,19 @@
       font-weight: 700;
       transition: var(--transition);
       font-size: 14px;
-    }
-    .logout-btn:hover { background: var(--yellow); color: var(--black); }
-
-    .layout { display: flex; flex: 1; }
-
-    /* القائمة الجانبية */
-    aside {
-      background: var(--black);
-      color: var(--white);
-      width: 280px;
-      padding: 25px 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      position: sticky;
-      top: 72px;
-      height: calc(100vh - 72px);
-      overflow-y: auto;
-    }
-    aside .menu-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
-      color: #ccc;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 12px;
-      transition: var(--transition);
-      border: 2px solid transparent;
-      font-size: 16px;
-      text-decoration: none;
+      gap: 8px;
     }
-    aside .menu-item:hover {
-      background: #1a1a1a;
-      color: var(--yellow);
-      border-color: rgba(251,192,45,0.3);
-      transform: translateX(-5px);
+    .logout-btn:hover { 
+      background: var(--yellow); 
+      color: var(--black); 
+      box-shadow: 0 4px 15px rgba(251,192,45,0.4);
     }
-    aside .menu-item.active {
-      background: rgba(251,192,45,0.15);
-      color: var(--yellow);
-      border-color: var(--yellow);
-      box-shadow: 0 4px 15px rgba(251,192,45,0.15);
-    }
-    aside .menu-item .icon { font-size: 22px; min-width: 30px; text-align: center; }
 
-    main { flex: 1; padding: 25px; }
+    .layout { display: flex; flex: 1; width: 100%; }
+
+    main { flex: 1; padding: 25px; width: 100%; }
 
     /* البطاقات والأقسام */
     .section {
@@ -256,6 +298,23 @@
       box-shadow: var(--shadow-md);
       margin-bottom: 25px;
       animation: fadeIn 0.4s ease;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-yellow);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .section:hover::before {
+      opacity: 1;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -277,12 +336,12 @@
       right: 0;
       width: 60px;
       height: 4px;
-      background: var(--yellow);
+      background: var(--gradient-yellow);
       border-radius: 4px;
     }
 
     .welcome-card {
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       border-radius: 16px;
       padding: 20px;
@@ -292,16 +351,29 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
+      box-shadow: var(--shadow-md);
+      border: 2px solid rgba(251,192,45,0.3);
     }
-    .welcome-card .welcome-text { font-size: 18px; font-weight: 700; }
+    .welcome-card .welcome-text { 
+      font-size: 18px; 
+      font-weight: 700; 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .welcome-card .welcome-text i {
+      font-size: 24px;
+      color: var(--yellow);
+    }
     .welcome-card .welcome-code {
-      background: var(--yellow);
+      background: var(--gradient-yellow);
       color: var(--black);
       padding: 10px 20px;
       border-radius: 12px;
       font-weight: 900;
       font-size: 20px;
       letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(251,192,45,0.4);
     }
 
     .stats-grid {
@@ -311,12 +383,23 @@
       margin-bottom: 30px;
     }
     .stat-card {
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       border-radius: 16px;
       padding: 20px;
       text-align: center;
       box-shadow: var(--shadow-md);
+      border: 2px solid rgba(251,192,45,0.2);
+      transition: var(--transition);
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--yellow);
+    }
+    .stat-card .stat-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
     }
     .stat-card .stat-value { font-size: 36px; font-weight: 900; }
     .stat-card .stat-label { font-size: 16px; color: #fff; opacity: 0.8; }
@@ -335,15 +418,37 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
+      box-shadow: var(--shadow-sm);
     }
     .order-card:hover {
       box-shadow: var(--shadow-md);
       transform: translateY(-3px);
+      border-right-color: var(--yellow-hover);
     }
     .order-card .order-info { display: flex; flex-direction: column; gap: 5px; }
-    .order-card .order-number { font-weight: 700; color: var(--black); font-size: 18px; }
+    .order-card .order-number { 
+      font-weight: 700; 
+      color: var(--black); 
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .order-card .order-number i {
+      color: var(--yellow);
+    }
     .order-card .shipment-number { color: #666; font-size: 14px; }
-    .order-card .final-price { font-weight: 700; color: var(--black); font-size: 18px; }
+    .order-card .final-price { 
+      font-weight: 700; 
+      color: var(--black); 
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .order-card .final-price i {
+      color: var(--yellow);
+    }
     .badge {
       display: inline-block;
       padding: 5px 14px;
@@ -377,11 +482,12 @@
       background: var(--white);
       box-shadow: var(--shadow-sm);
       border-color: var(--yellow);
+      transform: translateY(-3px);
     }
     .info-icon {
       width: 45px;
       height: 45px;
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       border-radius: 12px;
       display: flex;
@@ -408,11 +514,12 @@
       background: var(--white);
       box-shadow: var(--shadow-sm);
       border-color: var(--yellow);
+      transform: translateY(-3px);
     }
     .shipping-icon {
       width: 45px;
       height: 45px;
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       border-radius: 12px;
       display: flex;
@@ -424,7 +531,7 @@
 
     /* تفاصيل الطلب المحسّنة */
     .order-detail-banner {
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       border-radius: 16px;
       padding: 20px;
@@ -434,10 +541,18 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
+      box-shadow: var(--shadow-md);
+      border: 2px solid rgba(251,192,45,0.3);
     }
     .order-detail-banner .order-num {
       font-size: 18px;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .order-detail-banner .order-num i {
+      font-size: 24px;
     }
     .order-status-large {
       display: inline-flex;
@@ -462,11 +577,17 @@
       align-items: center;
       gap: 12px;
       border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .detail-card:hover {
+      background: var(--white);
+      border-color: var(--yellow);
+      transform: translateY(-3px);
     }
     .detail-card .d-icon {
       width: 40px;
       height: 40px;
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       border-radius: 10px;
       display: flex;
@@ -483,6 +604,12 @@
       font-size: 18px;
       margin: 15px 0 10px;
       color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .products-title i {
+      color: var(--yellow);
     }
     .product-item {
       background: var(--gray-bg);
@@ -495,6 +622,11 @@
       flex-wrap: wrap;
       gap: 8px;
       border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .product-item:hover {
+      background: var(--white);
+      border-color: var(--yellow);
     }
     .product-item a {
       color: var(--black);
@@ -502,7 +634,7 @@
       text-decoration: underline;
     }
     .product-qty-badge {
-      background: var(--yellow);
+      background: var(--gradient-yellow);
       color: var(--black);
       padding: 4px 12px;
       border-radius: 20px;
@@ -522,12 +654,13 @@
     }
     .calculator-result {
       margin-top: 25px;
-      background: var(--black);
+      background: var(--gradient-black);
       color: var(--yellow);
       padding: 25px;
       border-radius: 16px;
       text-align: center;
       box-shadow: var(--shadow-md);
+      border: 2px solid rgba(251,192,45,0.3);
     }
     .calculator-result .label { color: #ccc; font-size: 14px; }
     .calculator-result .value { font-size: 36px; font-weight: 900; }
@@ -582,24 +715,92 @@
       gap: 10px;
     }
 
-    /* استجابة */
-    @media (max-width: 992px) {
-      aside { width: 240px; }
-      main { padding: 20px; }
+    /* شريط التنقل السفلي المنحني */
+    .bottom-nav {
+      position: fixed;
+      bottom: 20px;
+      right: 50%;
+      transform: translateX(50%);
+      background: var(--gradient-black);
+      border-radius: 35px;
+      padding: 15px 25px;
+      display: flex;
+      gap: 20px;
+      z-index: 1500;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 0 2px rgba(251,192,45,0.3);
+      border: 2px solid var(--yellow);
+      backdrop-filter: blur(10px);
     }
+    .bottom-nav .nav-item {
+      width: 60px;
+      height: 60px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      transition: var(--transition);
+      color: #ccc;
+      background: transparent;
+      border: 2px solid transparent;
+      position: relative;
+    }
+    .bottom-nav .nav-item i {
+      transition: var(--transition);
+    }
+    .bottom-nav .nav-item:hover {
+      background: rgba(251,192,45,0.1);
+      color: var(--yellow);
+      border-color: rgba(251,192,45,0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(251,192,45,0.2);
+    }
+    .bottom-nav .nav-item:hover i {
+      transform: scale(1.1);
+    }
+    .bottom-nav .nav-item.active {
+      background: var(--gradient-yellow);
+      color: var(--black);
+      border-color: var(--yellow);
+      box-shadow: 0 8px 25px rgba(251,192,45,0.5);
+    }
+    .bottom-nav .nav-item.active i {
+      transform: scale(1.1);
+    }
+    .bottom-nav .nav-item .nav-tooltip {
+      position: absolute;
+      bottom: 75px;
+      right: 50%;
+      transform: translateX(50%);
+      background: var(--black);
+      color: var(--yellow);
+      padding: 8px 15px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      border: 1px solid rgba(251,192,45,0.3);
+    }
+    .bottom-nav .nav-item .nav-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      right: 50%;
+      transform: translateX(50%);
+      border: 6px solid transparent;
+      border-top-color: var(--black);
+    }
+    .bottom-nav .nav-item:hover .nav-tooltip {
+      opacity: 1;
+      bottom: 80px;
+    }
+
+    /* استجابة */
     @media (max-width: 768px) {
-      .hamburger { display: flex; }
-      .layout { flex-direction: column; }
-      aside {
-        position: fixed;
-        right: -280px;
-        top: 72px;
-        bottom: 0;
-        z-index: 999;
-        transition: right 0.3s ease;
-        width: 280px;
-      }
-      aside.open { right: 0; }
       main { padding: 15px; }
       .section { padding: 18px; }
       .modal { padding: 20px; }
@@ -608,6 +809,18 @@
       .user-code-badge { display: none; }
       .info-grid { grid-template-columns: 1fr; }
       .order-detail-grid { grid-template-columns: 1fr; }
+      .bottom-nav {
+        bottom: 10px;
+        padding: 12px 20px;
+        gap: 15px;
+        border-radius: 30px;
+      }
+      .bottom-nav .nav-item {
+        width: 55px;
+        height: 55px;
+        font-size: 26px;
+        border-radius: 20px;
+      }
     }
     @media (max-width: 480px) {
       header { padding: 10px 15px; }
@@ -617,6 +830,21 @@
       .stat-card .stat-value { font-size: 28px; }
       .welcome-card .welcome-code { font-size: 16px; padding: 8px 16px; }
       .order-detail-banner { flex-direction: column; text-align: center; }
+      .bottom-nav {
+        bottom: 8px;
+        padding: 10px 15px;
+        gap: 10px;
+        border-radius: 25px;
+      }
+      .bottom-nav .nav-item {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        border-radius: 18px;
+      }
+      .bottom-nav .nav-item .nav-tooltip {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -625,16 +853,22 @@
   <!-- شاشة الدخول -->
   <div id="login-screen">
     <div class="login-card">
-      <div class="logo">V</div>
+      <div class="logo">
+        <i class="fas fa-crown"></i>
+      </div>
       <h1><span class="highlight">VNDR</span> فندر</h1>
       <p>أدخل كود المستخدم للمتابعة</p>
       <div class="input-group">
-        <label>كود المستخدم</label>
+        <label><i class="fas fa-key"></i> كود المستخدم</label>
         <input type="text" id="user-code-input" placeholder="V123456" autocomplete="off">
       </div>
       <div class="actions">
-        <button class="btn btn-yellow" id="login-btn">دخول</button>
-        <button class="create-account-btn" id="create-account-btn">إنشاء حساب</button>
+        <button class="btn btn-yellow" id="login-btn">
+          <i class="fas fa-sign-in-alt"></i> دخول
+        </button>
+        <button class="create-account-btn" id="create-account-btn">
+          إنشاء حساب
+        </button>
       </div>
     </div>
   </div>
@@ -642,67 +876,61 @@
   <!-- التطبيق -->
   <div id="app" class="hidden">
     <header>
-      <button class="hamburger" id="hamburger">☰</button>
-      <div class="brand">VNDR <span>فندر</span></div>
-      <span class="user-code-badge" id="header-user-code"></span>
-      <button class="logout-btn" id="logout-btn">خروج</button>
+      <div class="brand">
+        <i class="fas fa-crown"></i>
+        VNDR <span>فندر</span>
+      </div>
+      <span class="user-code-badge" id="header-user-code">
+        <i class="fas fa-id-badge"></i>
+      </span>
+      <button class="logout-btn" id="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> خروج
+      </button>
     </header>
     <div class="layout">
-      <aside id="sidebar">
-        <a href="#" class="menu-item active" data-section="dashboard">
-          <span class="icon">📊</span> لوحة التحكم
-        </a>
-        <a href="#" class="menu-item" data-section="profile">
-          <span class="icon">👤</span> المعلومات الشخصية
-        </a>
-        <a href="#" class="menu-item" data-section="shipping">
-          <span class="icon">🚚</span> تفاصيل الشحن
-        </a>
-        <a href="#" class="menu-item" data-section="calculator">
-          <span class="icon">💰</span> حساب السعر
-        </a>
-      </aside>
-
       <main>
         <!-- لوحة التحكم -->
         <section id="dashboard-section" class="section">
-          <h2 class="section-title">لوحة التحكم</h2>
+          <h2 class="section-title"><i class="fas fa-chart-line"></i> لوحة التحكم</h2>
           <div class="welcome-card">
-            <div class="welcome-text">مرحباً بك، كود المستخدم الخاص بك:</div>
+            <div class="welcome-text">
+              <i class="fas fa-hand-peace"></i> مرحباً بك، كود المستخدم الخاص بك:
+            </div>
             <div class="welcome-code" id="welcome-user-code"></div>
           </div>
           <div class="stats-grid">
             <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
               <div class="stat-value" id="orders-count">0</div>
               <div class="stat-label">عدد الطلبات</div>
             </div>
           </div>
-          <h3 style="margin-bottom: 15px;">طلباتك</h3>
+          <h3 style="margin-bottom: 15px;"><i class="fas fa-list"></i> طلباتك</h3>
           <div class="orders-list" id="orders-list"></div>
         </section>
 
         <!-- المعلومات الشخصية -->
         <section id="profile-section" class="section hidden">
-          <h2 class="section-title">المعلومات الشخصية</h2>
+          <h2 class="section-title"><i class="fas fa-user-circle"></i> المعلومات الشخصية</h2>
           <div id="profile-content"></div>
         </section>
 
         <!-- تفاصيل الشحن -->
         <section id="shipping-section" class="section hidden">
-          <h2 class="section-title">تفاصيل الشحن مع فندر</h2>
+          <h2 class="section-title"><i class="fas fa-truck"></i> تفاصيل الشحن مع فندر</h2>
           <div id="shipping-content"></div>
         </section>
 
         <!-- حساب السعر -->
         <section id="calculator-section" class="section hidden">
-          <h2 class="section-title">حاسبة السعر</h2>
+          <h2 class="section-title"><i class="fas fa-calculator"></i> حاسبة السعر</h2>
           <div class="calculator-box">
             <div class="input-group">
-              <label>السعر بالدولار</label>
+              <label><i class="fas fa-dollar-sign"></i> السعر بالدولار</label>
               <input type="number" id="usd-input" placeholder="0.00" min="0" step="0.01">
             </div>
             <div class="calculator-result">
-              <div class="label">السعر بالدينار العراقي</div>
+              <div class="label"><i class="fas fa-money-bill-wave"></i> السعر بالدينار العراقي</div>
               <div class="value" id="iqd-result">0</div>
             </div>
           </div>
@@ -710,21 +938,47 @@
 
         <!-- تفاصيل طلب -->
         <section id="order-details-section" class="section hidden">
-          <button class="btn btn-outline" id="back-to-orders" style="width: auto; margin-bottom: 20px;">→ رجوع للطلبات</button>
-          <h2 class="section-title">تفاصيل الطلب</h2>
+          <button class="btn btn-outline" id="back-to-orders" style="width: auto; margin-bottom: 20px;">
+            <i class="fas fa-arrow-right"></i> رجوع للطلبات
+          </button>
+          <h2 class="section-title"><i class="fas fa-file-invoice"></i> تفاصيل الطلب</h2>
           <div id="order-details-content"></div>
         </section>
       </main>
+    </div>
+
+    <!-- شريط التنقل السفلي المنحني -->
+    <div class="bottom-nav" id="bottom-nav">
+      <div class="nav-item active" data-section="dashboard" title="الرئيسية">
+        <i class="fas fa-home"></i>
+        <span class="nav-tooltip">الرئيسية</span>
+      </div>
+      <div class="nav-item" data-section="profile" title="الملف الشخصي">
+        <i class="fas fa-user"></i>
+        <span class="nav-tooltip">الملف الشخصي</span>
+      </div>
+      <div class="nav-item" data-section="shipping" title="تفاصيل الشحن">
+        <i class="fas fa-truck"></i>
+        <span class="nav-tooltip">تفاصيل الشحن</span>
+      </div>
+      <div class="nav-item" data-section="calculator" title="حساب السعر">
+        <i class="fas fa-coins"></i>
+        <span class="nav-tooltip">حساب السعر</span>
+      </div>
     </div>
   </div>
 
   <!-- مودال إنشاء حساب -->
   <div id="create-account-modal" class="modal-overlay hidden">
     <div class="modal">
-      <button class="close-btn" id="close-create-modal">✕</button>
-      <h2>إنشاء حساب</h2>
+      <button class="close-btn" id="close-create-modal">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2><i class="fas fa-user-plus"></i> إنشاء حساب</h2>
       <p style="margin-bottom:20px;">لفتح حساب داخل موقع فندر، يجب عليك التواصل مع حسابهم الرسمي.</p>
-      <a href="https://www.instagram.com/vndr1q?igsh=MXR0cHNsY3VheTRkZw==" target="_blank" class="btn btn-yellow">فتح إنستغرام فندر</a>
+      <a href="https://www.instagram.com/vndr1q?igsh=MXR0cHNsY3VheTRkZw==" target="_blank" class="btn btn-yellow">
+        <i class="fab fa-instagram"></i> فتح إنستغرام فندر
+      </a>
     </div>
   </div>
 
@@ -740,7 +994,7 @@
       messagingSenderId: "175932378246",
       appId: "1:175932378246:web:f5ae257975059706691507",
       measurementId: "G-TEYQXZK3MP",
-      databaseURL: "https://vndrap1-default-rtdb.firebaseio.com/" // ضع الرابط الصحيح
+      databaseURL: "https://vndrap1-default-rtdb.firebaseio.com/"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -757,8 +1011,6 @@
     const createAccountBtn = document.getElementById('create-account-btn');
     const createAccountModal = document.getElementById('create-account-modal');
     const closeCreateModal = document.getElementById('close-create-modal');
-    const sidebar = document.getElementById('sidebar');
-    const hamburger = document.getElementById('hamburger');
     const ordersCountEl = document.getElementById('orders-count');
     const ordersListEl = document.getElementById('orders-list');
     const profileContentEl = document.getElementById('profile-content');
@@ -769,24 +1021,23 @@
     const iqdResult = document.getElementById('iqd-result');
     const headerUserCode = document.getElementById('header-user-code');
     const welcomeUserCode = document.getElementById('welcome-user-code');
+    const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
 
     // تحديث عرض كود المستخدم
     function updateUserCodeDisplay() {
       if (currentUserCode) {
-        headerUserCode.textContent = currentUserCode;
+        headerUserCode.innerHTML = `<i class="fas fa-id-badge"></i> ${currentUserCode}`;
         welcomeUserCode.textContent = currentUserCode;
       }
     }
 
     // التنقل بين الأقسام
-    document.querySelectorAll('.menu-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
+    bottomNavItems.forEach(item => {
+      item.addEventListener('click', () => {
         const section = item.dataset.section;
         showSection(section);
-        document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+        bottomNavItems.forEach(i => i.classList.remove('active'));
         item.classList.add('active');
-        if (window.innerWidth <= 768) sidebar.classList.remove('open');
       });
     });
 
@@ -827,6 +1078,9 @@
         loginScreen.classList.add('hidden');
         appDiv.classList.remove('hidden');
         updateUserCodeDisplay();
+        // تفعيل القسم الرئيسي
+        bottomNavItems.forEach(i => i.classList.remove('active'));
+        document.querySelector('.nav-item[data-section="dashboard"]').classList.add('active');
         loadDashboard();
       } catch (error) {
         console.error(error);
@@ -841,10 +1095,10 @@
       appDiv.classList.add('hidden');
       loginScreen.classList.remove('hidden');
       userCodeInput.value = '';
-      headerUserCode.textContent = '';
+      headerUserCode.innerHTML = '<i class="fas fa-id-badge"></i>';
       welcomeUserCode.textContent = '';
-      document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-      document.querySelector('.menu-item[data-section="dashboard"]').classList.add('active');
+      bottomNavItems.forEach(i => i.classList.remove('active'));
+      document.querySelector('.nav-item[data-section="dashboard"]').classList.add('active');
       showSection('dashboard');
     });
 
@@ -890,7 +1144,7 @@
 
     function renderOrders(orders) {
       if (orders.length === 0) {
-        ordersListEl.innerHTML = '<p style="text-align:center; color:#888;">لا توجد طلبات حالياً.</p>';
+        ordersListEl.innerHTML = '<p style="text-align:center; color:#888;"><i class="fas fa-inbox"></i> لا توجد طلبات حالياً.</p>';
         return;
       }
       ordersListEl.innerHTML = orders.map(order => {
@@ -899,11 +1153,15 @@
         return `
           <div class="order-card" data-order-id="${order.id}">
             <div class="order-info">
-              <div class="order-number">${order.orderNumber || 'بدون رقم'}</div>
+              <div class="order-number">
+                <i class="fas fa-box"></i> ${order.orderNumber || 'بدون رقم'}
+              </div>
               <div class="shipment-number">شحنة: ${order.shipmentNumber || 'غير محدد'}</div>
               <span class="badge ${badgeClass}">${statusText}</span>
             </div>
-            <div class="final-price">${formatNumber(order.finalPriceIQD || 0)} د.ع</div>
+            <div class="final-price">
+              <i class="fas fa-tag"></i> ${formatNumber(order.finalPriceIQD || 0)} د.ع
+            </div>
           </div>
         `;
       }).join('');
@@ -942,7 +1200,7 @@
 
         const products = (order.repeatedProducts || []).map(p => `
           <div class="product-item">
-            <span>${p.url ? `<a href="${p.url}" target="_blank">رابط المنتج</a>` : 'لا يوجد رابط'}</span>
+            <span>${p.url ? `<a href="${p.url}" target="_blank"><i class="fas fa-link"></i> رابط المنتج</a>` : '<i class="fas fa-ban"></i> لا يوجد رابط'}</span>
             <span class="product-qty-badge">العدد: ${p.quantity || 1}</span>
           </div>
         `).join('');
@@ -952,62 +1210,66 @@
 
         orderDetailsContent.innerHTML = `
           <div class="order-detail-banner">
-            <div class="order-num">📦 طلب رقم: ${order.orderNumber || 'غير محدد'}</div>
+            <div class="order-num">
+              <i class="fas fa-box-open"></i> طلب رقم: ${order.orderNumber || 'غير محدد'}
+            </div>
             <span class="order-status-large badge ${statusClass}">${status}</span>
           </div>
           <div class="order-detail-grid">
             <div class="detail-card">
-              <div class="d-icon">🚢</div>
+              <div class="d-icon"><i class="fas fa-ship"></i></div>
               <div>
                 <div class="d-label">رقم الشحنة</div>
                 <div class="d-value">${order.shipmentNumber || 'غير محدد'}</div>
               </div>
             </div>
             <div class="detail-card">
-              <div class="d-icon">🔗</div>
+              <div class="d-icon"><i class="fas fa-link"></i></div>
               <div>
                 <div class="d-label">رابط السلة</div>
                 <div class="d-value"><a href="${order.cartLink || '#'}" target="_blank" style="color:var(--black); font-weight:700;">فتح الرابط</a></div>
               </div>
             </div>
             <div class="detail-card">
-              <div class="d-icon">💵</div>
+              <div class="d-icon"><i class="fas fa-dollar-sign"></i></div>
               <div>
                 <div class="d-label">السعر بالدولار</div>
                 <div class="d-value">$${order.priceUSD || 0}</div>
               </div>
             </div>
             <div class="detail-card">
-              <div class="d-icon">💰</div>
+              <div class="d-icon"><i class="fas fa-money-bill-wave"></i></div>
               <div>
                 <div class="d-label">السعر الأصلي بالدينار</div>
                 <div class="d-value">${formatNumber(order.originalPriceIQD || 0)} د.ع</div>
               </div>
             </div>
             <div class="detail-card">
-              <div class="d-icon">🧾</div>
+              <div class="d-icon"><i class="fas fa-receipt"></i></div>
               <div>
                 <div class="d-label">العربون</div>
                 <div class="d-value">${formatNumber(order.deposit || 0)} د.ع</div>
               </div>
             </div>
             <div class="detail-card">
-              <div class="d-icon">🚚</div>
+              <div class="d-icon"><i class="fas fa-truck"></i></div>
               <div>
                 <div class="d-label">سعر التوصيل</div>
                 <div class="d-value">${formatNumber(order.deliveryFee || 0)} د.ع</div>
               </div>
             </div>
             <div class="detail-card">
-              <div class="d-icon">✅</div>
+              <div class="d-icon"><i class="fas fa-check-circle"></i></div>
               <div>
                 <div class="d-label">السعر النهائي</div>
                 <div class="d-value">${formatNumber(order.finalPriceIQD || 0)} د.ع</div>
               </div>
             </div>
           </div>
-          <div class="products-title">📋 المنتجات المكررة</div>
-          ${products || '<p style="color:#888;">لا يوجد منتجات مكررة</p>'}
+          <div class="products-title">
+            <i class="fas fa-clipboard-list"></i> المنتجات المكررة
+          </div>
+          ${products || '<p style="color:#888;"><i class="fas fa-box-open"></i> لا يوجد منتجات مكررة</p>'}
         `;
         showSection('order-details');
       } catch (error) {
@@ -1024,7 +1286,7 @@
         const usersRef = ref(db, 'users');
         const userQuery = query(usersRef, orderByChild('code'), equalTo(currentUserCode));
         const snap = await get(userQuery);
-        if (!snap.exists()) { profileContentEl.innerHTML = '<p>لم يتم العثور على المستخدم.</p>'; return; }
+        if (!snap.exists()) { profileContentEl.innerHTML = '<p><i class="fas fa-user-slash"></i> لم يتم العثور على المستخدم.</p>'; return; }
         let user = null;
         snap.forEach(child => {
           user = child.val();
@@ -1032,49 +1294,49 @@
         profileContentEl.innerHTML = `
           <div class="info-grid">
             <div class="info-card">
-              <div class="info-icon">🔑</div>
+              <div class="info-icon"><i class="fas fa-key"></i></div>
               <div class="info-content">
                 <div class="info-label">كود المستخدم</div>
                 <div class="info-value">${user.code}</div>
               </div>
             </div>
             <div class="info-card">
-              <div class="info-icon">📸</div>
+              <div class="info-icon"><i class="fab fa-instagram"></i></div>
               <div class="info-content">
                 <div class="info-label">حساب الإنستغرام</div>
                 <div class="info-value"><a href="${user.instagram || '#'}" target="_blank">${user.instagram || 'غير محدد'}</a></div>
               </div>
             </div>
             <div class="info-card">
-              <div class="info-icon">📞</div>
+              <div class="info-icon"><i class="fas fa-phone"></i></div>
               <div class="info-content">
                 <div class="info-label">رقم الهاتف الأول</div>
                 <div class="info-value">${user.phone1 || 'غير محدد'}</div>
               </div>
             </div>
             <div class="info-card">
-              <div class="info-icon">📞</div>
+              <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
               <div class="info-content">
                 <div class="info-label">رقم الهاتف الثاني</div>
                 <div class="info-value">${user.phone2 || 'غير محدد'}</div>
               </div>
             </div>
             <div class="info-card">
-              <div class="info-icon">📍</div>
+              <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
               <div class="info-content">
                 <div class="info-label">المحافظة</div>
                 <div class="info-value">${user.province || 'غير محدد'}</div>
               </div>
             </div>
             <div class="info-card">
-              <div class="info-icon">🏠</div>
+              <div class="info-icon"><i class="fas fa-home"></i></div>
               <div class="info-content">
                 <div class="info-label">العنوان</div>
                 <div class="info-value">${user.address || 'غير محدد'}</div>
               </div>
             </div>
             <div class="info-card">
-              <div class="info-icon">⚙️</div>
+              <div class="info-icon"><i class="fas fa-cog"></i></div>
               <div class="info-content">
                 <div class="info-label">الحالة</div>
                 <div class="info-value">${user.blocked ? 'محظور' : 'نشط'}</div>
@@ -1092,63 +1354,63 @@
       shippingContentEl.innerHTML = `
         <div class="info-grid">
           <div class="shipping-card">
-            <div class="shipping-icon">🌍</div>
+            <div class="shipping-icon"><i class="fas fa-globe"></i></div>
             <div>
               <div class="info-label">الدولة</div>
               <div class="info-value">الإمارات</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">💵</div>
+            <div class="shipping-icon"><i class="fas fa-dollar-sign"></i></div>
             <div>
               <div class="info-label">العملة</div>
               <div class="info-value">الدولار</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">📈</div>
+            <div class="shipping-icon"><i class="fas fa-chart-line"></i></div>
             <div>
               <div class="info-label">سعر الصرف</div>
               <div class="info-value">1,320</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">📦</div>
+            <div class="shipping-icon"><i class="fas fa-box"></i></div>
             <div>
               <div class="info-label">الشحن</div>
               <div class="info-value">مجاني بدون تحميل</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">⏳</div>
+            <div class="shipping-icon"><i class="fas fa-clock"></i></div>
             <div>
               <div class="info-label">مدة الشحن</div>
               <div class="info-value">من 14 إلى 18 يوم</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">🚚</div>
+            <div class="shipping-icon"><i class="fas fa-truck"></i></div>
             <div>
               <div class="info-label">التوصيل للطلبات فوق 100 ألف دينار</div>
               <div class="info-value">مجاني</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">🏙️</div>
+            <div class="shipping-icon"><i class="fas fa-city"></i></div>
             <div>
               <div class="info-label">التوصيل داخل ذي قار</div>
               <div class="info-value">3,000 دينار</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">🇮🇶</div>
+            <div class="shipping-icon"><i class="fas fa-flag"></i></div>
             <div>
               <div class="info-label">التوصيل لجميع المحافظات (أقل من 100 ألف)</div>
               <div class="info-value">5,000 دينار</div>
             </div>
           </div>
           <div class="shipping-card">
-            <div class="shipping-icon">🛡️</div>
+            <div class="shipping-icon"><i class="fas fa-shield-alt"></i></div>
             <div>
               <div class="info-label">الضمان</div>
               <div class="info-value">ضمان على الشحنة في حال التلف أو الضياع، نتحمل كافة المسؤولية</div>
@@ -1182,9 +1444,6 @@
       if (e.target === createAccountModal) createAccountModal.classList.add('hidden');
     });
 
-    // القائمة الجانبية للجوال
-    hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
-
     // تسجيل دخول تلقائي
     (async function autoLogin() {
       if (currentUserCode) {
@@ -1201,6 +1460,9 @@
               loginScreen.classList.add('hidden');
               appDiv.classList.remove('hidden');
               updateUserCodeDisplay();
+              // تفعيل القسم الرئيسي
+              bottomNavItems.forEach(i => i.classList.remove('active'));
+              document.querySelector('.nav-item[data-section="dashboard"]').classList.add('active');
               loadDashboard();
             } else {
               localStorage.removeItem('vndr_user_code');
