@@ -1791,11 +1791,11 @@
     });
 
     // حساب السعر في شاشة الدخول
-    loginUsdInput.addEventListener('input', () => {
-      const usd = parseFloat(loginUsdInput.value) || 0;
-      const iqd = usd * 1320;
-      loginIqdResult.textContent = formatNumber(roundToNearest1000(iqd));
-    });
+   loginUsdInput.addEventListener('input', () => {
+    const usd = parseFloat(loginUsdInput.value) || 0;
+    const iqd = usd * 1520;
+    loginIqdResult.textContent = formatNumber(iqd);
+});
 
     // تحديث عرض كود المستخدم
     function updateUserCodeDisplay() {
