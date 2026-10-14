@@ -2196,20 +2196,56 @@
 
     // حاسبة السعر في صفحة المستخدم
     usdInput.addEventListener('input', () => {
-      const usd = parseFloat(usdInput.value) || 0;
-      const iqd = usd * 1320;
-      iqdResult.textContent = formatNumber(roundToNearest1000(iqd));
-    });
+    const usd = parseFloat(usdInput.value) || 0;
+    const iqd = usd * 1520;
+    iqdResult.textContent = formatNumber(iqd);
+});
 
-    function roundToNearest1000(value) {
-      const remainder = value % 1000;
-      if (remainder < 750) return Math.floor(value / 1000) * 1000;
-      else return Math.ceil(value / 1000) * 1000;
-    }
+function formatNumber(num) {
+    // يمكنك تعديل الرقم 2 في الأعلى لزيادة أو تقليل عدد المراتب العشرية التي تظهر
+    return num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+}
 
-    function formatNumber(num) {
-      return num.toLocaleString('en-US');
+// إنشاء حساب
+createAccountBtn.addEventListener('click', () => createAccountModal.classList.remove('hidden'));
+closeCreateModal.addEventListener('click', () => createAccountModal.classList.add('hidden'));
+createAccountModal.addEventListener('click', (e) => {
+    if (e.target === createAccountModal) createAccountModal.classList.add('hidden');
+});
+
+// تسجيل دخول تلقائي
+(async function autoLogin() {
+    if (currentUserCode) {
+        try {
+            const usersRef = ref(db, 'users');
+            const userQuery = query(usersRef, orderByChild('code'), equalTo(currentUserCode));
+            const snap = await get(userQuery);
+            if (snap.exists()) {
+                let blocked = false;
+                snap.forEach(child => {
+                    blocked = child.val().blocked;
+                });
+                if (!blocked) {
+                    loginScreen.classList.add('hidden');
+                    appDiv.classList.remove('hidden');
+                    updateUserCodeDisplay();
+                    // تفعيل القسم الرئيسي
+                    bottomNavItems.forEach(i => i.classList.remove('active'));
+                    document.querySelector('.nav-item[data-section="dashboard"]').classList.add('active');
+                    loadDashboard();
+                } else {
+                    localStorage.removeItem('vndr_user_code');
+                    currentUserCode = null;
+                }
+            } else {
+                localStorage.removeItem('vndr_user_code');
+                currentUserCode = null;
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
+})();
 
     // إنشاء حساب
     createAccountBtn.addEventListener('click', () => createAccountModal.classList.remove('hidden'));
